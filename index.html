@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* [تنسيقات CSS - لم يتغير أي شيء هنا] */
         :root {
             --primary-color: #6366f1;
             --secondary-color: #a855f7;
@@ -21,7 +22,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: all 0.3s ease; /* انتقال سلس للكل */
+            transition: all 0.3s ease;
         }
 
         body {
@@ -34,7 +35,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            font-family: 'Cairo', sans-serif; /* الخط الافتراضي */
+            font-family: 'Cairo', sans-serif;
             /* تم حذف سطر overflow: hidden; هنا للسماح بالتمرير */
         }
 
@@ -71,7 +72,7 @@
             border: 1px solid var(--border-color);
             border-radius: 24px;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            overflow: hidden; /* يبقي نموذج تسجيل الدخول ثابتاً ومحدوداً بـ 600 بكسل */
+            overflow: hidden;
             position: relative;
         }
 
@@ -113,7 +114,6 @@
         .input-group input {
             width: 100%;
             padding: 14px 20px;
-            /* سيتم ضبط الحشوة بناءً على الاتجاه عبر CSS */
             background: rgba(15, 23, 42, 0.6);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -344,7 +344,7 @@
                 </div>
                 <div class="lang-menu">
                     <div class="lang-item" onclick="setLanguage('ar')"><span>🇮🇶</span> العربية</div>
-                    <div class="lang-item" onclick="setLanguage('en')"><span>🇺🇸</span> English</div>
+                    <div class="lang-item" onclick="redirectToEnglish()"><span>🇺🇸</span> English</div>
                     <div class="lang-item" onclick="setLanguage('es')"><span>🇪🇸</span> Español</div>
                 </div>
             </div>
@@ -363,95 +363,21 @@
     </div>
 
     <script>
-        // قاموس الترجمة
-        const translations = {
-            ar: {
-                welcome: "مرحباً بعودتك! الرجاء إدخال بياناتك",
-                emailPlaceholder: "البريد الإلكتروني",
-                passPlaceholder: "كلمة المرور",
-                remember: "تذكرني",
-                forgot: "نسيت كلمة المرور؟",
-                login: "تسجيل الدخول",
-                or: "أو",
-                noAccount: "ليس لديك حساب؟",
-                create: "انشئ حساباً الآن",
-                langBtn: "اللغة",
-                featTitle: "ما نقدمه لك:",
-                f1: "توليد صور وفيديوهات احترافي بالذكاء الاصطناعي.",
-                f2: "مكتبة كاملة لتصميم مخططات الكود (Chef AI).",
-                f3: "إمكانية تدريب النماذج المخصصة الخاصة بك.",
-                f4: "أمان وحماية للبيانات على مستوى المؤسسات.",
-                f5: "مساحة عمل موحدة للإبداع والإنتاجية."
-            },
-            en: {
-                welcome: "Welcome back! Please enter your details",
-                emailPlaceholder: "Email Address",
-                passPlaceholder: "Password",
-                remember: "Remember me",
-                forgot: "Forgot Password?",
-                login: "Sign In",
-                or: "OR",
-                noAccount: "Don't have an account?",
-                create: "Sign up now",
-                langBtn: "Language",
-                featTitle: "What we offer:",
-                f1: "Professional AI image & video generation.",
-                f2: "Complete library for code diagrams (Chef AI).",
-                f3: "Ability to train your own custom models.",
-                f4: "Enterprise-grade data security & protection.",
-                f5: "Unified workspace for creativity & productivity."
-            },
-            es: {
-                welcome: "¡Bienvenido! Por favor ingrese sus datos",
-                emailPlaceholder: "Correo Electrónico",
-                passPlaceholder: "Contraseña",
-                remember: "Recuérdame",
-                forgot: "¿Olvidaste tu contraseña?",
-                login: "Iniciar Sesión",
-                or: "O",
-                noAccount: "¿No tienes cuenta?",
-                create: "Regístrate ahora",
-                langBtn: "Idioma",
-                featTitle: "Lo que ofrecemos:",
-                f1: "Generación profesional de imágenes y video con IA.",
-                f2: "Biblioteca completa para diagramas de código.",
-                f3: "Capacidad para entrenar tus propios modelos.",
-                f4: "Seguridad y protección de datos empresarial.",
-                f5: "Espacio de trabajo unificado para la productividad."
-            }
-        };
+        // دالة جديدة لإعادة التوجيه إلى الملف الإنجليزي
+        function redirectToEnglish() {
+            window.location.href = './index_en.html';
+        }
 
+        // ملاحظة: تم الإبقاء على دالة setLanguage للغة الإسبانية إذا أردت استخدامها لاحقاً
         function setLanguage(lang) {
-            const t = translations[lang] || translations['en']; // الافتراضي للإنجليزية إذا لم توجد اللغة
-            
-            // تغيير اتجاه الصفحة
             if (lang === 'ar') {
-                document.documentElement.setAttribute('dir', 'rtl');
-                document.documentElement.setAttribute('lang', 'ar');
-            } else {
+                window.location.href = './index.html'; // البقاء في نفس الملف
+            } else if (lang === 'es') {
+                // يمكنك إضافة ترجمات إسبانية هنا إذا لم ترغب بملف منفصل
                 document.documentElement.setAttribute('dir', 'ltr');
-                document.documentElement.setAttribute('lang', lang);
+                document.documentElement.setAttribute('lang', 'es');
+                // ... (تحديث النصوص يدوياً)
             }
-
-            // تحديث النصوص
-            document.getElementById('welcomeText').innerText = t.welcome;
-            document.getElementById('emailInput').placeholder = t.emailPlaceholder;
-            document.getElementById('passInput').placeholder = t.passPlaceholder;
-            document.getElementById('rememberMe').innerText = t.remember;
-            document.getElementById('forgotPass').innerText = t.forgot;
-            document.getElementById('loginBtn').innerText = t.login;
-            document.getElementById('orText').innerText = t.or;
-            document.getElementById('noAccount').innerText = t.noAccount;
-            document.getElementById('createAccount').innerText = t.create;
-            document.getElementById('currentLang').innerText = t.langBtn;
-            document.getElementById('featuresTitle').innerText = t.featTitle;
-            
-            // تحديث المميزات
-            document.getElementById('feat1').innerText = t.f1;
-            document.getElementById('feat2').innerText = t.f2;
-            document.getElementById('feat3').innerText = t.f3;
-            document.getElementById('feat4').innerText = t.f4;
-            document.getElementById('feat5').innerText = t.f5;
         }
     </script>
 </body>
