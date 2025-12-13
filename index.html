@@ -1,39 +1,107 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>تسجيل الدخول - Jonior_1230</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tojim AI Website</title>
+    <link rel="stylesheet" href="css/style.css"> 
+    
+    <link rel="stylesheet" href="css/all.min.css"> 
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">Tojim AI</a>
+        <nav class="navbar">
+            <a href="#home">Home</a>
+            <a href="#services">Services</a>
+            <a href="#features">Features</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+            <div id="search-btn" class="fas fa-search"></div>
+        </div>
+        <form action="" class="search-form">
+            <input type="search" name="" placeholder="Search here..." id="search-box">
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+    </header>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <section class="home" id="home">
+        <div class="content">
+            <h3>The AI Future is Here</h3>
+            <p>Empower your business with cutting-edge Artificial Intelligence solutions designed to streamline operations, enhance decision-making, and drive innovation.</p>
+            <a href="#" class="btn">Get Started</a>
+        </div>
+        <div class="image">
+            <img src="images/home-img.png" alt="AI Robot">
+        </div>
+    </section>
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+    <section class="services" id="services">
+        <h1 class="heading">Our Services</h1>
+        <div class="box-container">
+            <div class="box">
+                <i class="fas fa-robot"></i>
+                <h3>Automated Solutions</h3>
+                <p>Developing custom AI bots and automation workflows to reduce manual tasks and increase efficiency.</p>
+            </div>
+            <div class="box">
+                <i class="fas fa-brain"></i>
+                <h3>Machine Learning Models</h3>
+                <p>Creating and deploying sophisticated ML models for predictive analytics, forecasting, and data interpretation.</p>
+            </div>
+            <div class="box">
+                <i class="fas fa-code"></i>
+                <h3>Integration & API</h3>
+                <p>Seamlessly integrating AI capabilities into your existing software infrastructure via robust APIs and tools.</p>
+            </div>
+        </div>
+    </section>
 
-  <style>
-    :root {
-      --primary-color: #6366f1; /* Indigo */
-      --secondary-color: #a855f7; /* Purple */
-      --bg-color: #0f172a; /* Slate 900 */
-      --border-color: rgba(255,255,255,0.12);
-      --text-color: #ffffff;
-      --muted-text: #94a3b8; /* Slate 400 */
-    }
+    <section class="features" id="features">
+        <h1 class="heading">Key Features</h1>
+        <div class="box-container">
+            <div class="box">
+                <img src="images/feature-1.png" alt="Feature 1">
+                <h3>Scalable Infrastructure</h3>
+                <p>Our solutions scale with your business growth, ensuring consistent performance under heavy load.</p>
+            </div>
+            <div class="box">
+                <img src="images/feature-2.png" alt="Feature 2">
+                <h3>Data Security</h3>
+                <p>Enterprise-level security protocols ensure your data is protected and compliant with global standards.</p>
+            </div>
+            <div class="box">
+                <img src="images/feature-3.png" alt="Feature 3">
+                <h3>24/7 Support</h3>
+                <p>Our expert team is available around the clock to assist you with any AI integration or operational query.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="pricing" id="pricing">
+        <h1 class="heading">Pricing Plans</h1>
+        <div class="box-container">
+            </div>
+    </section>
+    
+    <section class="contact" id="contact">
+        <h1 class="heading">Contact Us</h1>
+        <form action="">
+            </form>
+    </section>
+    
+    <footer>
+        <div class="credit">Created by <span>jimonrst</span> | All Rights Reserved</div>
+    </footer>
+    
+    <script src="js/script.js"></script>
 
-    /* إعادة تعريف الانتقالات لتقليل تكلفة الأداء وتحسين التفاعل */
-    *, *::before, *::after { box-sizing: border-box; }
-
-    a, button, .lang-btn, .login-btn, .input-group input {
-      transition: color .16s ease, background-color .16s ease, box-shadow .16s ease, transform .16s ease;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
+</body>
+</html>
       justify-content: center;
       font-family: 'Cairo', sans-serif;
       background-color: var(--bg-color);
