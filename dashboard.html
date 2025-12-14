@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - Tojim.AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1; /* Indigo */
+            --secondary-color: #a855f7; /* Purple */
+            --bg-color: #0f172a; /* Slate 900 */
+            --sidebar-bg: #1e293b; /* Slate 800 - أغمق قليلاً */
+            --card-bg: #283747; /* لون بطاقة مناسب */
+            --text-color: #ffffff;
+            --muted-text: #94a3b8;
+            --success-color: #4ade80; /* Green */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ---------------------- الشريط الجانبي (Sidebar) - أصبح أصغر ---------------------- */
+        .sidebar {
+            width: 200px; /* تصغير عرض الشريط الجانبي */
+            background-color: var(--sidebar-bg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            right: 0; /* Align right for RTL */
+            height: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.6rem; /* تصغير حجم الخط */
+            font-weight: 700;
+            margin-bottom: 30px; /* تقليل المسافة */
+            text-align: center;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px; /* تصغير الحواشي */
+            margin-bottom: 8px; /* تقليل المسافة بين الروابط */
+            color: var(--muted-text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem; 
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            margin-left: 12px; /* Margin left for RTL */
+            font-size: 1rem;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .nav-link.active {
+            border-right: 3px solid var(--primary-color);
+        }
+
+        .profile-section {
+            margin-top: auto; /* Push to the bottom */
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .profile-section img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+            margin-bottom: 8px;
+        }
+
+        .profile-section p {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .logout-btn {
+            color: #ef4444; 
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* ---------------------- المحتوى الرئيسي (Main Content) ---------------------- */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px 25px; /* تقليل الحواشي الجانبية والعلوية */
+            margin-right: 200px; /* Offset the sidebar new smaller width for RTL */
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px; /* تقليل المسافة */
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--sidebar-bg);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        /* 🟢 تنسيقات شريط الدردشة مع AI 🟢 */
+        .ai-chat-bar {
+            background-color: var(--sidebar-bg);
+            padding: 15px; /* تقليل الحواشي */
+            border-radius: 12px;
+            margin-bottom: 30px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .ai-chat-bar h3 {
+            font-size: 1.3rem; /* تصغير حجم الخط */
+            margin-bottom: 12px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-input-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .chat-input-group input {
+            flex-grow: 1;
+            padding: 12px 15px; /* تصغير حجم الإدخال */
+            border-radius: 8px;
+            border: 1px solid var(--card-bg);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 0.95rem;
+            outline: none;
+        }
+        
+        .chat-input-group button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            padding: 0 18px; /* تصغير حجم الزر */
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            min-width: 50px;
+        }
+        /* 🔴 نهاية تنسيقات شريط الدردشة 🔴 */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* تصغير حجم البطاقات */
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background-color: var(--sidebar-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            border-right: 4px solid var(--primary-color);
+        }
+
+        .stat-card .icon {
+            font-size: 2rem;
+        }
+
+        .stat-card .details h3 {
+            font-size: 0.9rem;
+        }
+
+        .stat-card .details p {
+            font-size: 1.6rem;
+        }
+
+        /* AI Tools Section */
+        .tools-section h2 {
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 4px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* تصغير حجم البطاقات */
+            gap: 15px;
+        }
+        
+        .tool-card {
+            background-color: var(--sidebar-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tool-card i {
+            font-size: 1.8rem;
+        }
+
+        .tool-card h3 {
+            font-size: 1.1rem;
+        }
+
+        .tool-card p {
+            font-size: 0.85rem;
+        }
+        
+        .tool-card a {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                padding: 10px;
+            }
+            .main-content {
+                margin-right: 0;
+                padding: 15px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo">Tojim.AI</div>
+        
+        <nav>
+            <a href="#" class="nav-link active"><i class="fas fa-home"></i> لوحة التحكم</a>
+            <a href="#" class="nav-link"><i class="fas fa-magic"></i> أدوات الذكاء الاصطناعي</a>
+            <a href="#" class="nav-link"><i class="fas fa-images"></i> معرض المشاريع</a>
+            <a href="#" class="nav-link"><i class="fas fa-history"></i> السجل</a>
+            <a href="#" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a>
+        </nav>
+        
+        <div class="profile-section">
+            <img src="user_avatar.jpg" alt="صورة المستخدم">
+            <p>مرحباً، المستخدم</p>
+            <a href="index.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>ملخص حسابك في Tojim.AI</h1>
+            <div style="font-size: 0.9rem; color: var(--success-color);"><i class="fas fa-check-circle"></i> اشتراك Premium نشط</div>
+        </div>
+        
+        <div class="ai-chat-bar">
+            <h3><i class="fas fa-robot"></i> ابدأ التحدث مع Tojim AI</h3>
+            <div class="chat-input-group">
+                <input type="text" id="aiQuery" placeholder="اكتب سؤالك أو اطلب صورة/محتوى هنا..." onkeypress="if(event.key === 'Enter') sendMessage()">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="details">
+                    <h3>المشاريع المنجزة</h3>
+                    <p>42</p>
+                </div>
+                <i class="fas fa-check-double icon"></i>
+            </div>
+            
+            <div class="stat-card">
+                <div class="details">
+                    <h3>رصيد التوليد الشهري</h3>
+                    <p>غير محدود</p>
+                </div>
+                <i class="fas fa-infinity icon"></i>
+            </div>
+            
+            <div class="stat-card">
+                <div class="details">
+                    <h3>آخر استخدام</h3>
+                    <p>منذ 3 ساعات</p>
+                </div>
+                <i class="fas fa-clock icon"></i>
+            </div>
+        </div>
+
+        <div class="tools-section">
+            <h2>أو اختر أداة متخصصة:</h2>
+            
+            <div class="tools-grid">
+                
+                <div class="tool-card" onclick="alert('جارٍ فتح أداة توليد الصور')">
+                    <i class="fas fa-image" style="color: #6366f1;"></i>
+                    <h3>توليد الصور بالذكاء الاصطناعي</h3>
+                    <p>حوّل الأوصاف النصية إلى صور فنية عالية الجودة خلال ثوانٍ. بدقة 4K.</p>
+                    <a href="#">ابدأ الآن <i class="fas fa-arrow-left"></i></a>
+                </div>
+
+                <div class="tool-card" onclick="alert('جارٍ فتح أداة تحسين النصوص')">
+                    <i class="fas fa-pen-fancy" style="color: #a855f7;"></i>
+                    <h3>مُحسّن النصوص والبريد</h3>
+                    <p>صياغة رسائل البريد الإلكتروني، المقالات، والمحتوى التسويقي بأسلوب احترافي ومقنع.</p>
+                    <a href="#">ابدأ الآن <i class="fas fa-arrow-left"></i></a>
+                </div>
+
+                <div class="tool-card" onclick="alert('جارٍ فتح أداة Chef AI')">
+                    <i class="fas fa-utensils" style="color: #f59e0b;"></i>
+                    <h3>Chef AI (وصفات مبتكرة)</h3>
+                    <p>اكتشف وصفات جديدة بناءً على المكونات المتوفرة لديك أو حميتك الغذائية.</p>
+                    <a href="#">ابدأ الآن <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <div class="tool-card" onclick="alert('جارٍ فتح أداة توليد الفيديو')">
+                    <i class="fas fa-video" style="color: #ef4444;"></i>
+                    <h3>توليد مقاطع الفيديو</h3>
+                    <p>إنشاء مقاطع فيديو قصيرة متحركة أو إعلانية من نص أو صورة ثابتة.</p>
+                    <a href="#">ابدأ الآن <i class="fas fa-arrow-left"></i></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function sendMessage() {
+            const query = document.getElementById('aiQuery').value;
+            if (query.trim() === "") {
+                alert("الرجاء كتابة استفسارك أولاً!");
+                return;
+            }
+            alert(`تم إرسال الاستفسار إلى Tojim AI: "${query}". (هنا سيتم إرساله للخادم)`);
+            document.getElementById('aiQuery').value = ''; // مسح حقل الإدخال
+        }
+    </script>
+</body>
+</html>
