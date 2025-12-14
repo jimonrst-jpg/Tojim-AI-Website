@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* [تنسيقات CSS - لم يتغير أي شيء هنا] */
         :root {
             --primary-color: #6366f1;
             --secondary-color: #a855f7;
@@ -36,10 +35,9 @@
             align-items: center;
             min-height: 100vh;
             font-family: 'Cairo', sans-serif;
-            /* تم حذف سطر overflow: hidden; هنا للسماح بالتمرير */
         }
 
-        /* الخلفية المتحركة */
+        /* Animated Background */
         .background-shapes {
             position: absolute;
             width: 100%;
@@ -65,7 +63,7 @@
             display: flex;
             width: 900px;
             max-width: 95%;
-            height: 600px;
+            height: 650px;
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -75,13 +73,13 @@
             overflow: hidden;
             position: relative;
         }
-
-        /* تنسيق النصوص واللغات */
-        body[lang="en"] {
+        
+        /* Language Formatting */
+        html[lang="en"], html[lang="es"] {
             font-family: 'Poppins', sans-serif;
         }
 
-        /* قسم تسجيل الدخول */
+        /* Login Section */
         .login-section {
             flex: 1;
             padding: 40px;
@@ -122,7 +120,7 @@
             outline: none;
         }
         
-        /* تعديل مكان الأيقونة والحشوة حسب اللغة */
+        /* Adjust icon and padding based on LTR/RTL */
         html[dir="rtl"] .input-group input { padding-right: 45px; padding-left: 20px; }
         html[dir="rtl"] .input-group i { right: 15px; left: auto; }
         
@@ -159,6 +157,27 @@
             box-shadow: 0 10px 20px -10px var(--primary-color);
         }
 
+        /* تنسيقات زر Google الجديدة */
+        .google-btn {
+            background: #4285F4; /* لون Google الأزرق */
+            color: white;
+            margin-top: 15px; /* مسافة إضافية */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .google-btn:hover {
+            background: #357ae8;
+            box-shadow: 0 10px 20px -10px #4285F4;
+        }
+
+        .google-btn i {
+            font-size: 1.1rem;
+        }
+        /* نهاية تنسيقات زر Google */
+
         .divider {
             margin: 25px 0;
             text-align: center;
@@ -183,7 +202,20 @@
             font-size: 0.85rem;
         }
 
-        /* قسم المعلومات (اليسار/اليمين حسب اللغة) */
+        .forgot-password {
+            text-align: right;
+            margin-top: 5px;
+            font-size: 0.85rem;
+        }
+        .forgot-password a {
+            color: var(--muted-text);
+            text-decoration: none;
+        }
+        .forgot-password a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Info Section (Left/Right based on language) */
         .info-section {
             flex: 1;
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
@@ -192,7 +224,9 @@
             flex-direction: column;
             justify-content: flex-end;
             position: relative;
-            border-right: 1px solid var(--border-color);
+            /* Border logic for LTR/RTL */
+            border-right: 1px solid var(--border-color); 
+            border-left: none;
         }
         
         html[dir="ltr"] .info-section {
@@ -200,14 +234,14 @@
             border-left: 1px solid var(--border-color);
         }
 
-        /* قائمة اللغات - زر الكوكب */
+        /* Language Dropdown - Globe button */
         .language-dropdown {
             position: absolute;
             top: 25px;
             z-index: 10;
         }
         
-        /* مكان الزر يتغير حسب الاتجاه */
+        /* Button position changes based on direction */
         html[dir="rtl"] .language-dropdown { left: 25px; }
         html[dir="ltr"] .language-dropdown { right: 25px; }
 
@@ -226,7 +260,7 @@
         
         .lang-btn:hover { background: rgba(255, 255, 255, 0.1); }
         
-        /* أيقونة الكوكب تدور عند التحويم */
+        /* Globe icon spin on hover */
         .lang-btn:hover i { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -243,7 +277,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
         
-        /* محاذاة القائمة المنسدلة */
+        /* Dropdown alignment */
         html[dir="rtl"] .lang-menu { left: 0; }
         html[dir="ltr"] .lang-menu { right: 0; }
 
@@ -297,7 +331,7 @@
         @media (max-width: 768px) {
             .container { flex-direction: column-reverse; height: auto; width: 90%; }
             .info-section { padding: 30px; min-height: 350px; }
-            html[dir="ltr"] .container { flex-direction: column-reverse; }
+            html[dir="rtl"] .container { flex-direction: column-reverse; }
         }
     </style>
 </head>
@@ -310,8 +344,8 @@
 
     <div class="container">
         <div class="login-section">
-            <div class="brand-name">الصانع Jonior_1230</div>
-            <p class="welcome-text" id="welcomeText">مرحباً بعودتك! الرجاء إدخال بياناتك</p>
+            <div class="brand-name">Jonior_1230</div>
+            <p class="welcome-text" id="welcomeText">مرحباً بك مجدداً! سجل الدخول للمتابعة</p>
 
             <form>
                 <div class="input-group">
@@ -322,61 +356,68 @@
                     <input type="password" id="passInput" placeholder="كلمة المرور" required>
                     <i class="fas fa-lock"></i>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 0.8rem; color: var(--muted-text);">
-                    <label><input type="checkbox"> <span id="rememberMe">تذكرني</span></label>
-                    <a href="#" style="color: var(--primary-color); text-decoration: none;" id="forgotPass">نسيت كلمة المرور؟</a>
+                
+                <div class="forgot-password">
+                    <a href="#" id="forgotPassLink">نسيت كلمة المرور؟</a>
                 </div>
+                
                 <button type="submit" class="login-btn" id="loginBtn">تسجيل الدخول</button>
             </form>
+            
+            <button type="button" class="login-btn google-btn" onclick="signInWithGoogle()">
+                <i class="fab fa-google"></i> <span id="googleLoginText">تسجيل الدخول بواسطة Google</span>
+            </button>
 
             <div class="divider"><span id="orText">أو</span></div>
             
             <div style="text-align: center; font-size: 0.9rem; color: var(--muted-text);">
                 <span id="noAccount">ليس لديك حساب؟</span> <a href="signup.html" style="color: var(--secondary-color); font-weight: bold; text-decoration: none;" id="createAccount">انشئ حساباً الآن</a>
-
             </div>
+        </div>
 
         <div class="info-section">
             
             <div class="language-dropdown">
                 <div class="lang-btn">
-                    <i class="fas fa-globe"></i> <span id="currentLang">اللغات</span>
+                    <i class="fas fa-globe"></i> <span id="currentLang">العربية</span>
                 </div>
                 <div class="lang-menu">
-                    <div class="lang-item" onclick="setLanguage('ar')"><span>🇮🇶</span> العربية</div>
+                    <div class="lang-item" onclick="redirectToArabic()"><span>🇮🇶</span> العربية</div>
                     <div class="lang-item" onclick="redirectToEnglish()"><span>🇺🇸</span> English</div>
-                    <div class="lang-item" onclick="setLanguage('es')"><span>🇪🇸</span> Español</div>
+                    <div class="lang-item" onclick="redirectToSpanish()"><span>🇪🇸</span> Español</div>
                 </div>
             </div>
 
             <div class="features-container">
-                <div class="features-title" id="featuresTitle">ما نقدمه لك:</div>
+                <div class="features-title" id="featuresTitle">ابدأ رحلة الإبداع الرقمي:</div>
                 <ul class="features-list">
-                    <li><i class="fas fa-robot"></i><span id="feat1">توليد صور وفيديوهات احترافي بالذكاء الاصطناعي.</span></li>
-                    <li><i class="fas fa-brain"></i><span id="feat3">إمكانية تدريب النماذج المخصصة الخاصة بك.</span></li>
-                    <li><i class="fas fa-shield-alt"></i><span id="feat4">أمان وحماية للبيانات على مستوى المؤسسات.</span></li>
-                    <li><i class="fas fa-layer-group"></i><span id="feat5">مساحة عمل موحدة للإبداع والإنتاجية.</span></li>
+                    <li><i class="fas fa-bolt"></i><span id="feat1">سرعة فائقة في معالجة الذكاء الاصطناعي.</span></li>
+                    <li><i class="fas fa-infinity"></i><span id="feat2">وصول غير محدود لأدوات التصميم المتقدمة.</span></li>
+                    <li><i class="fas fa-chart-line"></i><span id="feat3">تتبع وتحليل دقيق لجميع مشاريعك.</span></li>
+                    <li><i class="fas fa-mobile-alt"></i><span id="feat4">تجربة موحدة وسلسة عبر كافة الأجهزة.</span></li>
+                    <li><i class="fas fa-star"></i><span id="feat5">دعم فني متميز على مدار الساعة طوال الأسبوع.</span></li>
                 </ul>
             </div>
         </div>
     </div>
 
     <script>
-        // دالة جديدة لإعادة التوجيه إلى الملف الإنجليزي
+        // Redirect function to Arabic Index (same file)
+        function redirectToArabic() {
+            window.location.href = './index.html';
+        }
+        // Redirect function to English Index
         function redirectToEnglish() {
             window.location.href = './index_en.html';
         }
-
-        // ملاحظة: تم الإبقاء على دالة setLanguage للغة الإسبانية إذا أردت استخدامها لاحقاً
-        function setLanguage(lang) {
-            if (lang === 'ar') {
-                window.location.href = './index.html'; // البقاء في نفس الملف
-            } else if (lang === 'es') {
-                // يمكنك إضافة ترجمات إسبانية هنا إذا لم ترغب بملف منفصل
-                document.documentElement.setAttribute('dir', 'ltr');
-                document.documentElement.setAttribute('lang', 'es');
-                // ... (تحديث النصوص يدوياً)
-            }
+        // Redirect function to Spanish Index
+        function redirectToSpanish() {
+            window.location.href = './index_es.html';
+        }
+        
+        // Placeholder function for Google sign-in (needs back-end implementation)
+        function signInWithGoogle() {
+            alert('تم الضغط على زر تسجيل الدخول بواسطة Google. (يجب ربطها بخدمة Google Identity أو Firebase)');
         }
     </script>
 </body>
