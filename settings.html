@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإعدادات - Tojim.AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1; /* Indigo */
+            --secondary-color: #a855f7; /* Purple */
+            --bg-color: #0f172a; /* Slate 900 */
+            --sidebar-bg: #1e293b; /* Slate 800 */
+            --card-bg: #283747; /* لون بطاقة مناسب */
+            --text-color: #ffffff;
+            --muted-text: #94a3b8;
+            --success-color: #4ade80; /* Green */
+            --input-bg: rgba(30, 41, 59, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ---------------------- الشريط الجانبي (Sidebar) - لربط الصفحات ---------------------- */
+        .sidebar {
+            width: 200px;
+            background-color: var(--sidebar-bg);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            top: 0;
+            right: 0; 
+            height: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.6rem; 
+            font-weight: 700;
+            margin-bottom: 30px; 
+            text-align: center;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin-bottom: 8px;
+            color: var(--muted-text);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.95rem; 
+            font-weight: 600;
+        }
+
+        .nav-link i {
+            margin-left: 12px;
+            font-size: 1rem;
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .nav-link.active {
+            border-right: 3px solid var(--primary-color);
+        }
+        
+        /* ---------------------- المحتوى الرئيسي (Main Content) ---------------------- */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px 40px;
+            margin-right: 200px; /* Offset the sidebar width for RTL */
+            max-width: 1000px; /* لتضييق محتوى الإعدادات */
+        }
+        
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 5px;
+            display: inline-block;
+        }
+
+        .header p {
+            color: var(--muted-text);
+            margin-bottom: 40px;
+        }
+        
+        /* ---------------------- أقسام الإعدادات ---------------------- */
+        .settings-section {
+            background-color: var(--sidebar-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .settings-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--muted-text);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--input-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary-color);
+        }
+
+        .save-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            float: left; /* زر الحفظ لليسار في RTL */
+            margin-top: 10px;
+        }
+        .save-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        
+        /* ---------------------- قسم صورة المستخدم ---------------------- */
+        .profile-pic-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+        }
+
+        .upload-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .upload-btn:hover {
+            background-color: #8b5cf6;
+        }
+        
+        /* إخفاء ملف الإدخال الأصلي */
+        input[type="file"] {
+            display: none;
+        }
+        
+        /* ---------------------- قسم الخلفية ---------------------- */
+        .theme-options {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .theme-option {
+            text-align: center;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+        }
+        
+        .theme-option:hover {
+            border-color: var(--secondary-color);
+        }
+        
+        .theme-option.active {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+        
+        .theme-option i {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .theme-light i { color: #facc15; }
+        .theme-dark i { color: #1e293b; background-color: #f1f5f9; border-radius: 50%; padding: 5px;}
+        
+        /* Responsive Adjustments */
+        @media (max-width: 900px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-around;
+                padding: 10px;
+            }
+            .main-content {
+                margin-right: 0;
+                padding: 15px;
+            }
+            .profile-pic-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .save-btn {
+                float: none;
+                width: 100%;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo">Tojim.AI</div>
+        
+        <nav>
+            <a href="dashboard.html" class="nav-link"><i class="fas fa-home"></i> لوحة التحكم</a>
+            <a href="#" class="nav-link"><i class="fas fa-magic"></i> أدوات الذكاء الاصطناعي</a>
+            <a href="#" class="nav-link"><i class="fas fa-images"></i> معرض المشاريع</a>
+            <a href="#" class="nav-link"><i class="fas fa-history"></i> السجل</a>
+            <a href="settings.html" class="nav-link active"><i class="fas fa-cog"></i> الإعدادات</a>
+        </nav>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>إعدادات الحساب</h1>
+            <p>إدارة ملفك الشخصي، كلمة المرور، وتفضيلات التطبيق.</p>
+        </div>
+
+        
+        <div class="settings-section">
+            <h2><i class="fas fa-user-circle"></i> الملف الشخصي والصورة</h2>
+            <form onsubmit="handleProfileUpdate(event)">
+                <div class="profile-pic-container">
+                    <img src="user_avatar.jpg" alt="صورة المستخدم الحالية" class="profile-pic" id="currentProfilePic">
+                    <div>
+                        <label for="file-upload" class="upload-btn">
+                            <i class="fas fa-camera"></i> تغيير الصورة
+                        </label>
+                        <input id="file-upload" type="file" accept="image/*" onchange="previewImage(event)"/>
+                        <p style="font-size: 0.8rem; color: var(--muted-text); margin-top: 10px;">JPG أو PNG بحد أقصى 5 ميغابايت.</p>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="userName">الاسم الكامل</label>
+                    <input type="text" id="userName" value="اسم المستخدم" required>
+                </div>
+                
+                <button type="submit" class="save-btn">حفظ تحديثات الملف</button>
+                <div style="clear: both;"></div>
+            </form>
+        </div>
+
+
+        <div class="settings-section">
+            <h2><i class="fas fa-paint-brush"></i> إعدادات الخلفية (السمات)</h2>
+            <form onsubmit="handleThemeUpdate(event)">
+                <label>اختر المظهر المفضل لديك:</label>
+                <div class="theme-options">
+                    <div class="theme-option active" onclick="selectTheme('dark')" id="darkTheme">
+                        <i class="fas fa-moon theme-dark"></i>
+                        <p>المظهر الداكن</p>
+                    </div>
+                    <div class="theme-option" onclick="selectTheme('light')" id="lightTheme">
+                        <i class="fas fa-sun theme-light"></i>
+                        <p>المظهر الفاتح</p>
+                    </div>
+                </div>
+                <button type="submit" class="save-btn">حفظ إعدادات المظهر</button>
+                 <div style="clear: both;"></div>
+            </form>
+        </div>
+        
+        
+        <div class="settings-section">
+            <h2><i class="fas fa-lock"></i> تغيير كلمة المرور</h2>
+            <form onsubmit="handleChangePassword(event)">
+                <div class="form-group">
+                    <label for="currentPassword">كلمة المرور الحالية</label>
+                    <input type="password" id="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">كلمة المرور الجديدة</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">تأكيد كلمة المرور الجديدة</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="save-btn">تغيير كلمة المرور</button>
+                <div style="clear: both;"></div>
+            </form>
+        </div>
+        
+        
+        <div class="settings-section">
+            <h2><i class="fas fa-info-circle"></i> إعدادات أخرى</h2>
+            <div class="form-group">
+                <label>معرف المستخدم (ID)</label>
+                <input type="text" value="USER-7890123" disabled style="color: var(--primary-color);">
+            </div>
+            
+            <div class="form-group">
+                <label>تفعيل إشعارات البريد الإلكتروني</label>
+                <select>
+                    <option selected>مفعل</option>
+                    <option>غير مفعل</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <button onclick="alert('سيبدأ الآن إجراء حذف الحساب...')" style="background-color: #ef4444; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; float: left; font-weight: 600;">
+                    <i class="fas fa-trash-alt"></i> حذف الحساب
+                </button>
+                 <div style="clear: both;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // دالة لعرض معاينة صورة المستخدم الجديدة
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function(){
+                const output = document.getElementById('currentProfilePic');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+            alert("تم تحميل الصورة. اضغط على 'حفظ تحديثات الملف' لتثبيت التغيير.");
+        }
+        
+        // دالة لاختيار الثيم (مظهر الخلفية)
+        function selectTheme(theme) {
+            document.querySelectorAll('.theme-option').forEach(el => el.classList.remove('active'));
+            document.getElementById(theme + 'Theme').classList.add('active');
+            alert(`تم اختيار المظهر: ${theme === 'dark' ? 'الداكن' : 'الفاتح'}. اضغط حفظ.`);
+        }
+
+        // دوال وهمية لمعالجة النماذج
+        function handleProfileUpdate(event) {
+            event.preventDefault();
+            alert("تم حفظ تحديثات الملف الشخصي بنجاح! (محاكاة)");
+        }
+        
+        function handleThemeUpdate(event) {
+            event.preventDefault();
+            alert("تم حفظ إعدادات المظهر بنجاح! (محاكاة)");
+        }
+        
+        function handleChangePassword(event) {
+            event.preventDefault();
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+            
+            if (newPass !== confirmPass) {
+                alert("كلمة المرور الجديدة وتأكيدها غير متطابقتين.");
+                return;
+            }
+            alert("تم تغيير كلمة المرور بنجاح! (محاكاة)");
+        }
+        
+        // تحديد المظهر الداكن كنشط افتراضياً
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('darkTheme').classList.add('active');
+        });
+    </script>
+</body>
+</html>
