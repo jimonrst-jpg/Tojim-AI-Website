@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Nueva Cuenta - Jonior_1230</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #a855f7;
+            --bg-color: #0f172a;
+            --border-color: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+            --muted-text: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif; 
+        }
+
+        /* Animated Background */
+        .background-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .shape {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out;
+        }
+        .shape-1 { background: var(--primary-color); width: 300px; height: 300px; top: -10%; left: -10%; border-radius: 50%; }
+        .shape-2 { background: var(--secondary-color); width: 400px; height: 400px; bottom: -10%; right: -10%; border-radius: 50%; animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 40px); }
+        }
+
+        .container {
+            display: flex;
+            width: 900px;
+            max-width: 95%;
+            height: 650px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Text and Language Formatting */
+        html[lang="ar"] {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* Signup Section */
+        .signup-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .brand-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .welcome-text {
+            color: var(--muted-text);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        /* Adjust icon and padding based on LTR/RTL */
+        html[dir="rtl"] .input-group input { padding-right: 45px; padding-left: 20px; }
+        html[dir="rtl"] .input-group i { right: 15px; left: auto; }
+        
+        html[dir="ltr"] .input-group input { padding-left: 45px; padding-right: 20px; }
+        html[dir="ltr"] .input-group i { left: 15px; right: auto; }
+
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--muted-text);
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .signup-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px var(--primary-color);
+        }
+
+        .divider {
+            margin: 25px 0;
+            text-align: center;
+            position: relative;
+        }
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+        .divider span {
+            background: #151e32; 
+            padding: 0 10px;
+            color: var(--muted-text);
+            position: relative;
+            z-index: 2;
+            font-size: 0.85rem;
+        }
+
+        /* Info Section (Left/Right based on language) */
+        .info-section {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            /* Border logic for LTR/RTL */
+            border-right: none; 
+            border-left: 1px solid var(--border-color);
+        }
+        
+        html[dir="rtl"] .info-section {
+            border-right: 1px solid var(--border-color);
+            border-left: none;
+        }
+
+        /* Language Dropdown - Globe button */
+        .language-dropdown {
+            position: absolute;
+            top: 25px;
+            z-index: 10;
+        }
+        
+        /* Button position changes based on direction */
+        html[dir="rtl"] .language-dropdown { left: 25px; }
+        html[dir="ltr"] .language-dropdown { right: 25px; }
+
+        .lang-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+        }
+        
+        .lang-btn:hover { background: rgba(255, 255, 255, 0.1); }
+        
+        /* Globe icon spin on hover */
+        .lang-btn:hover i { animation: spin 4s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .lang-menu {
+            position: absolute;
+            top: 100%;
+            margin-top: 10px;
+            background: #1e293b;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 10px;
+            width: 160px;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+        
+        /* Dropdown alignment */
+        html[dir="rtl"] .lang-menu { left: 0; }
+        html[dir="ltr"] .lang-menu { right: 0; }
+
+        .language-dropdown:hover .lang-menu { display: block; }
+
+        .lang-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            color: var(--text-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .lang-item:hover { background: rgba(255, 255, 255, 0.1); }
+
+        .features-title {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .features-list { list-style: none; }
+
+        .features-list li {
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .features-list li i {
+            color: #4ade80;
+            background: rgba(74, 222, 128, 0.1);
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column-reverse; height: auto; width: 90%; }
+            .info-section { padding: 30px; min-height: 350px; }
+            html[dir="ltr"] .container { flex-direction: column-reverse; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="container">
+        <div class="signup-section">
+            <div class="brand-name">Jonior_1230</div>
+            <p class="welcome-text" id="welcomeText">¡Únete hoy! Comienza tu viaje creativo</p>
+
+            <form>
+                <div class="input-group">
+                    <input type="text" id="nameInput" placeholder="Nombre Completo" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="emailInput" placeholder="Correo Electrónico" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="passInput" placeholder="Contraseña Segura" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="confirmPassInput" placeholder="Confirmar Contraseña" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                
+                <div style="margin-bottom: 20px; font-size: 0.8rem; color: var(--muted-text); text-align: left;">
+                    <label><input type="checkbox" required> <span id="termsAgree">Acepto los <a href="terms_es.html" style="color: var(--primary-color); text-decoration: none;">Términos de Servicio</a> y la <a href="privacy_es.html" style="color: var(--primary-color); text-decoration: none;">Política de Privacidad</a>.</span></label>
+                </div>
+                
+                <button type="submit" class="signup-btn" id="signupBtn">Crear Cuenta</button>
+            </form>
+
+            <div class="divider"><span id="orText">O</span></div>
+            
+            <div style="text-align: center; font-size: 0.9rem; color: var(--muted-text);">
+                <span id="haveAccount">¿Ya tienes una cuenta?</span> <a href="index_es.html" style="color: var(--secondary-color); font-weight: bold; text-decoration: none;" id="loginLink">Iniciar Sesión</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            
+            <div class="language-dropdown">
+                <div class="lang-btn">
+                    <i class="fas fa-globe"></i> <span id="currentLang">Idioma</span>
+                </div>
+                <div class="lang-menu">
+                    <div class="lang-item" onclick="redirectToArabic()"><span>🇮🇶</span> العربية</div>
+                    <div class="lang-item" onclick="redirectToEnglish()"><span>🇺🇸</span> English</div>
+                    <div class="lang-item" onclick="redirectToSpanish()"><span>🇪🇸</span> Español</div>
+                </div>
+            </div>
+
+            <div class="features-container">
+                <div class="features-title" id="featuresTitle">Empieza a crear con nosotros:</div>
+                <ul class="features-list">
+                    <li><i class="fas fa-bolt"></i><span id="feat1">Velocidad ultrarrápida de procesamiento de IA.</span></li>
+                    <li><i class="fas fa-infinity"></i><span id="feat2">Acceso ilimitado a herramientas avanzadas de diseño.</span></li>
+                    <li><i class="fas fa-chart-line"></i><span id="feat3">Seguimiento y análisis precisos de tus proyectos.</span></li>
+                    <li><i class="fas fa-mobile-alt"></i><span id="feat4">Experiencia unificada y fluida en todos los dispositivos.</span></li>
+                    <li><i class="fas fa-star"></i><span id="feat5">Soporte técnico premium 24/7.</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // دالة إعادة التوجيه إلى الملف العربي
+        function redirectToArabic() {
+            window.location.href = './signup.html';
+        }
+        // دالة إعادة التوجيه إلى الملف الإنجليزي
+        function redirectToEnglish() {
+            window.location.href = './signup_en.html';
+        }
+        // دالة إعادة التوجيه إلى الملف الإسباني (نفس الملف)
+        function redirectToSpanish() {
+            window.location.href = './signup_es.html';
+        }
+    </script>
+</body>
+</html>
