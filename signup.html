@@ -37,7 +37,7 @@
             font-family: 'Cairo', sans-serif;
         }
 
-        /* الخلفية المتحركة */
+        /* Animated Background */
         .background-shapes {
             position: absolute;
             width: 100%;
@@ -63,7 +63,7 @@
             display: flex;
             width: 900px;
             max-width: 95%;
-            height: 650px; /* زيادة الارتفاع قليلاً لاستيعاب حقل الاسم */
+            height: 650px;
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -74,12 +74,12 @@
             position: relative;
         }
 
-        /* تنسيق النصوص واللغات */
-        body[lang="en"] {
+        /* Text and Language Formatting */
+        html[lang="en"], html[lang="es"] {
             font-family: 'Poppins', sans-serif;
         }
 
-        /* قسم التسجيل */
+        /* Signup Section */
         .signup-section {
             flex: 1;
             padding: 40px;
@@ -120,7 +120,7 @@
             outline: none;
         }
         
-        /* تعديل مكان الأيقونة والحشوة حسب اللغة */
+        /* Adjust icon and padding based on LTR/RTL */
         html[dir="rtl"] .input-group input { padding-right: 45px; padding-left: 20px; }
         html[dir="rtl"] .input-group i { right: 15px; left: auto; }
         
@@ -156,6 +156,27 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px -10px var(--primary-color);
         }
+        
+        /* تنسيقات زر Google الجديدة */
+        .google-btn {
+            background: #4285F4; /* لون Google الأزرق */
+            color: white;
+            margin-top: 15px; /* مسافة إضافية */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .google-btn:hover {
+            background: #357ae8;
+            box-shadow: 0 10px 20px -10px #4285F4;
+        }
+
+        .google-btn i {
+            font-size: 1.1rem;
+        }
+        /* نهاية تنسيقات زر Google */
 
         .divider {
             margin: 25px 0;
@@ -181,7 +202,7 @@
             font-size: 0.85rem;
         }
 
-        /* قسم المعلومات (اليسار/اليمين حسب اللغة) - نفس تنسيقات info-section */
+        /* Info Section (Left/Right based on language) */
         .info-section {
             flex: 1;
             background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
@@ -190,7 +211,9 @@
             flex-direction: column;
             justify-content: flex-end;
             position: relative;
-            border-right: 1px solid var(--border-color);
+            /* Border logic for LTR/RTL */
+            border-right: 1px solid var(--border-color); 
+            border-left: none;
         }
         
         html[dir="ltr"] .info-section {
@@ -198,14 +221,14 @@
             border-left: 1px solid var(--border-color);
         }
 
-        /* قائمة اللغات - زر الكوكب */
+        /* Language Dropdown - Globe button */
         .language-dropdown {
             position: absolute;
             top: 25px;
             z-index: 10;
         }
         
-        /* مكان الزر يتغير حسب الاتجاه */
+        /* Button position changes based on direction */
         html[dir="rtl"] .language-dropdown { left: 25px; }
         html[dir="ltr"] .language-dropdown { right: 25px; }
 
@@ -224,7 +247,7 @@
         
         .lang-btn:hover { background: rgba(255, 255, 255, 0.1); }
         
-        /* أيقونة الكوكب تدور عند التحويم */
+        /* Globe icon spin on hover */
         .lang-btn:hover i { animation: spin 4s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
@@ -241,7 +264,7 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
         }
         
-        /* محاذاة القائمة المنسدلة */
+        /* Dropdown alignment */
         html[dir="rtl"] .lang-menu { left: 0; }
         html[dir="ltr"] .lang-menu { right: 0; }
 
@@ -295,7 +318,7 @@
         @media (max-width: 768px) {
             .container { flex-direction: column-reverse; height: auto; width: 90%; }
             .info-section { padding: 30px; min-height: 350px; }
-            html[dir="ltr"] .container { flex-direction: column-reverse; }
+            html[dir="rtl"] .container { flex-direction: column-reverse; }
         }
     </style>
 </head>
@@ -313,7 +336,7 @@
 
             <form>
                 <div class="input-group">
-                    <input type="text" id="nameInput" placeholder="الاسم الكامل" required>
+                    <input type="text" id="nameInput" placeholder="الاسم بالكامل" required>
                     <i class="fas fa-user"></i>
                 </div>
                 <div class="input-group">
@@ -329,12 +352,17 @@
                     <i class="fas fa-lock"></i>
                 </div>
                 
-                <div style="margin-bottom: 20px; font-size: 0.8rem; color: var(--muted-text); text-align: justify;">
+                <div style="margin-bottom: 20px; font-size: 0.8rem; color: var(--muted-text); text-align: right;">
                     <label><input type="checkbox" required> <span id="termsAgree">أوافق على <a href="terms.html" style="color: var(--primary-color); text-decoration: none;">شروط الخدمة</a> و <a href="privacy.html" style="color: var(--primary-color); text-decoration: none;">سياسة الخصوصية</a>.</span></label>
                 </div>
                 
                 <button type="submit" class="signup-btn" id="signupBtn">إنشاء حساب</button>
             </form>
+            
+            <button type="button" class="signup-btn google-btn" onclick="signUpWithGoogle()">
+                <i class="fab fa-google"></i> <span id="googleSignupText">التسجيل بواسطة Google</span>
+            </button>
+
 
             <div class="divider"><span id="orText">أو</span></div>
             
@@ -347,7 +375,7 @@
             
             <div class="language-dropdown">
                 <div class="lang-btn">
-                    <i class="fas fa-globe"></i> <span id="currentLang">اللغات</span>
+                    <i class="fas fa-globe"></i> <span id="currentLang">العربية</span>
                 </div>
                 <div class="lang-menu">
                     <div class="lang-item" onclick="redirectToArabic()"><span>🇮🇶</span> العربية</div>
@@ -357,13 +385,13 @@
             </div>
 
             <div class="features-container">
-                <div class="features-title" id="featuresTitle">ابدأ الإبداع معنا:</div>
+                <div class="features-title" id="featuresTitle">ابدأ رحلة الإبداع الرقمي:</div>
                 <ul class="features-list">
-                    <li><i class="fas fa-bolt"></i><span id="feat1">سرعة فائقة في معالجة طلبات الذكاء الاصطناعي.</span></li>
+                    <li><i class="fas fa-bolt"></i><span id="feat1">سرعة فائقة في معالجة الذكاء الاصطناعي.</span></li>
                     <li><i class="fas fa-infinity"></i><span id="feat2">وصول غير محدود لأدوات التصميم المتقدمة.</span></li>
-                    <li><i class="fas fa-chart-line"></i><span id="feat3">تتبع وتحليل دقيق لتقدم مشاريعك.</span></li>
-                    <li><i class="fas fa-mobile-alt"></i><span id="feat4">تجربة موحدة سلسة عبر جميع الأجهزة.</span></li>
-                    <li><i class="fas fa-star"></i><span id="feat5">دعم فني متميز على مدار الساعة.</span></li>
+                    <li><i class="fas fa-chart-line"></i><span id="feat3">تتبع وتحليل دقيق لجميع مشاريعك.</span></li>
+                    <li><i class="fas fa-mobile-alt"></i><span id="feat4">تجربة موحدة وسلسة عبر كافة الأجهزة.</span></li>
+                    <li><i class="fas fa-star"></i><span id="feat5">دعم فني متميز على مدار الساعة طوال الأسبوع.</span></li>
                 </ul>
             </div>
         </div>
@@ -374,13 +402,18 @@
         function redirectToArabic() {
             window.location.href = './signup.html';
         }
-        // دالة إعادة التوجيه إلى الملف الإنجليزي للتسجيل
+        // دالة إعادة التوجيه إلى الملف الإنجليزي
         function redirectToEnglish() {
             window.location.href = './signup_en.html';
         }
-        // دالة إعادة التوجيه إلى الملف الإسباني للتسجيل
+        // دالة إعادة التوجيه إلى الملف الإسباني
         function redirectToSpanish() {
             window.location.href = './signup_es.html';
+        }
+        
+        // Placeholder function for Google sign-up (needs back-end implementation)
+        function signUpWithGoogle() {
+            alert('تم الضغط على زر التسجيل بواسطة Google. (يجب ربطها بخدمة Google Identity أو Firebase)');
         }
     </script>
 </body>
