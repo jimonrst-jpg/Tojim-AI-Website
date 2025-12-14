@@ -7,6 +7,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+        data-client_id="583533829408-ggoo2pah3vtuln4ddtl6am68gt6qrvn8.apps.googleusercontent.com"
+        data-context="signup"
+        data-ux_mode="popup"
+        data-callback="handleCredentialResponse"
+        data-auto_prompt="false">
+    </div>
     <style>
         :root {
             --primary-color: #6366f1;
@@ -398,22 +406,30 @@
     </div>
 
     <script>
-        // دالة إعادة التوجيه إلى الملف العربي (نفس الملف)
+        // 🟢 2. تعريف الدالة التي تستقبل بيانات Google 🟢
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            alert('تم استقبال بيانات التسجيل من Google بنجاح. الآن يجب على الخادم التحقق من هذه البيانات.');
+
+            // لاحقاً، يمكنك إضافة كود لإعادة التوجيه:
+            // window.location.href = 'dashboard.html'; 
+        }
+        
+        function signUpWithGoogle() {
+            // يمكن تركها فارغة، لأن كود g_id_onload هو من يتولى مهمة تشغيل النافذة المنبثقة
+            alert('جارٍ محاولة التسجيل بواسطة Google...');
+        }
+
+
+        // Redirect functions
         function redirectToArabic() {
             window.location.href = './signup.html';
         }
-        // دالة إعادة التوجيه إلى الملف الإنجليزي
         function redirectToEnglish() {
             window.location.href = './signup_en.html';
         }
-        // دالة إعادة التوجيه إلى الملف الإسباني
         function redirectToSpanish() {
             window.location.href = './signup_es.html';
-        }
-        
-        // Placeholder function for Google sign-up (needs back-end implementation)
-        function signUpWithGoogle() {
-            alert('تم الضغط على زر التسجيل بواسطة Google. (يجب ربطها بخدمة Google Identity أو Firebase)');
         }
     </script>
 </body>
