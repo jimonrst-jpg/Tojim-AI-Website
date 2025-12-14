@@ -3,20 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - Tojim.AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>تسجيل الدخول - Tojim.AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <div id="g_id_onload"
+        data-client_id="583533829408-ggoo2pah3vtuln4ddtl6am68gt6qrvn8.apps.googleusercontent.com"
+        data-context="signin"
+        data-ux_mode="popup"
+        data-callback="handleCredentialResponse"
+        data-auto_prompt="false">
+    </div>
     <style>
         :root {
-            --primary-color: #6366f1; /* Indigo */
-            --secondary-color: #a855f7; /* Purple */
-            --bg-color: #0f172a; /* Slate 900 */
-            --sidebar-bg: #1e293b; /* Slate 800 - أغمق قليلاً */
-            --card-bg: #283747; /* لون بطاقة مناسب */
+            --primary-color: #6366f1;
+            --secondary-color: #a855f7;
+            --bg-color: #0f172a;
+            --border-color: rgba(255, 255, 255, 0.2);
             --text-color: #ffffff;
             --muted-text: #94a3b8;
-            --success-color: #4ade80; /* Green */
         }
 
         * {
@@ -24,356 +30,318 @@
             padding: 0;
             box-sizing: border-box;
             transition: all 0.3s ease;
-            font-family: 'Cairo', sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
             display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Cairo', sans-serif;
+        }
+        
+        /* Animated Background */
+        .background-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        .shape {
+            position: absolute;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out;
+        }
+        .shape-1 { background: var(--primary-color); width: 300px; height: 300px; top: -10%; left: -10%; border-radius: 50%; }
+        .shape-2 { background: var(--secondary-color); width: 400px; height: 400px; bottom: -10%; right: -10%; border-radius: 50%; animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 40px); }
         }
 
-        /* ---------------------- الشريط الجانبي (Sidebar) - أصبح أصغر ---------------------- */
-        .sidebar {
-            width: 200px; /* تصغير عرض الشريط الجانبي */
-            background-color: var(--sidebar-bg);
-            padding: 20px;
+        .container {
+            display: flex;
+            width: 900px;
+            max-width: 95%;
+            height: 600px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Login Section */
+        .login-section {
+            flex: 1;
+            padding: 40px;
             display: flex;
             flex-direction: column;
-            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-            position: fixed;
-            top: 0;
-            right: 0; /* Align right for RTL */
-            height: 100%;
-            z-index: 1000;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
         }
 
-        .logo {
-            font-size: 1.6rem; /* تصغير حجم الخط */
+        .brand-name {
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: 30px; /* تقليل المسافة */
-            text-align: center;
+            margin-bottom: 10px;
             background: linear-gradient(to right, #818cf8, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 10px 12px; /* تصغير الحواشي */
-            margin-bottom: 8px; /* تقليل المسافة بين الروابط */
+        .welcome-text {
             color: var(--muted-text);
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 0.95rem; 
-            font-weight: 600;
+            margin-bottom: 30px;
+            font-size: 0.95rem;
         }
 
-        .nav-link i {
-            margin-left: 12px; /* Margin left for RTL */
-            font-size: 1rem;
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
         }
-        
-        .nav-link:hover, .nav-link.active {
-            background-color: var(--card-bg);
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            padding-right: 45px; /* Space for icon */
         }
         
-        .nav-link.active {
-            border-right: 3px solid var(--primary-color);
+        .input-group input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
         }
 
-        .profile-section {
-            margin-top: auto; /* Push to the bottom */
-            padding-top: 15px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
+        .input-group i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 15px;
+            color: var(--muted-text);
         }
-
-        .profile-section img {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--primary-color);
-            margin-bottom: 8px;
-        }
-
-        .profile-section p {
+        
+        .forgot-password {
+            text-align: left;
+            margin-bottom: 25px;
             font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 3px;
         }
         
-        .logout-btn {
-            color: #ef4444; 
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 500;
+        .forgot-password a {
+            color: var(--primary-color);
             text-decoration: none;
-            display: block;
-            margin-top: 5px;
-        }
-
-        /* ---------------------- المحتوى الرئيسي (Main Content) ---------------------- */
-        .main-content {
-            flex-grow: 1;
-            padding: 20px 25px; /* تقليل الحواشي الجانبية والعلوية */
-            margin-right: 200px; /* Offset the sidebar new smaller width for RTL */
+            font-weight: 600;
         }
         
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px; /* تقليل المسافة */
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--sidebar-bg);
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
         }
 
-        .header h1 {
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px var(--primary-color);
+        }
+        
+        /* تنسيقات زر Google */
+        .google-btn {
+            background: #4285F4; 
+            color: white;
+            margin-top: 15px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .google-btn:hover {
+            background: #357ae8;
+            box-shadow: 0 10px 20px -10px #4285F4;
+        }
+
+        .google-btn i {
+            font-size: 1.1rem;
+        }
+        
+        .divider {
+            margin: 25px 0;
+            text-align: center;
+            position: relative;
+        }
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border-color);
+            z-index: 1;
+        }
+        .divider span {
+            background: #151e32; 
+            padding: 0 10px;
+            color: var(--muted-text);
+            position: relative;
+            z-index: 2;
+            font-size: 0.85rem;
+        }
+
+        .no-account {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--muted-text);
+        }
+        
+        .no-account a {
+            color: var(--secondary-color);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Info Section (RTL) */
+        .info-section {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            border-right: 1px solid var(--border-color); 
+        }
+        
+        .info-title {
+            color: white;
             font-size: 1.8rem;
+            margin-bottom: 20px;
             font-weight: 700;
         }
         
-        /* 🟢 تنسيقات شريط الدردشة مع AI 🟢 */
-        .ai-chat-bar {
-            background-color: var(--sidebar-bg);
-            padding: 15px; /* تقليل الحواشي */
-            border-radius: 12px;
-            margin-bottom: 30px; 
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(99, 102, 241, 0.2);
+        .info-text {
+            color: #e2e8f0;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 40px;
         }
 
-        .ai-chat-bar h3 {
-            font-size: 1.3rem; /* تصغير حجم الخط */
-            margin-bottom: 12px;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .chat-input-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .chat-input-group input {
-            flex-grow: 1;
-            padding: 12px 15px; /* تصغير حجم الإدخال */
-            border-radius: 8px;
-            border: 1px solid var(--card-bg);
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-size: 0.95rem;
-            outline: none;
-        }
-        
-        .chat-input-group button {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            color: white;
-            padding: 0 18px; /* تصغير حجم الزر */
-            border-radius: 8px;
+        .info-link {
+            color: var(--success-color);
+            text-decoration: none;
+            font-weight: 600;
             font-size: 1rem;
-            cursor: pointer;
-            min-width: 50px;
-        }
-        /* 🔴 نهاية تنسيقات شريط الدردشة 🔴 */
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* تصغير حجم البطاقات */
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background-color: var(--sidebar-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-            border-right: 4px solid var(--primary-color);
-        }
-
-        .stat-card .icon {
-            font-size: 2rem;
-        }
-
-        .stat-card .details h3 {
-            font-size: 0.9rem;
-        }
-
-        .stat-card .details p {
-            font-size: 1.6rem;
-        }
-
-        /* AI Tools Section */
-        .tools-section h2 {
-            margin-bottom: 20px;
-            font-size: 1.6rem;
-            border-bottom: 2px solid var(--primary-color);
-            padding-bottom: 4px;
+            display: inline-block;
         }
         
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* تصغير حجم البطاقات */
-            gap: 15px;
+        @media (max-width: 768px) {
+            .container { flex-direction: column; height: auto; width: 90%; }
+            .info-section { display: none; } /* إخفاء قسم المعلومات على الشاشات الصغيرة */
         }
-        
-        .tool-card {
-            background-color: var(--sidebar-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .tool-card i {
-            font-size: 1.8rem;
-        }
-
-        .tool-card h3 {
-            font-size: 1.1rem;
-        }
-
-        .tool-card p {
-            font-size: 0.85rem;
-        }
-        
-        .tool-card a {
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-        
-        /* Responsive Adjustments */
-        @media (max-width: 900px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: static;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: space-around;
-                padding: 10px;
-            }
-            .main-content {
-                margin-right: 0;
-                padding: 15px;
-            }
-        }
-        
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <div class="logo">Tojim.AI</div>
-        
-        <nav>
-            <a href="#" class="nav-link active"><i class="fas fa-home"></i> لوحة التحكم</a>
-            <a href="#" class="nav-link"><i class="fas fa-magic"></i> أدوات الذكاء الاصطناعي</a>
-            <a href="#" class="nav-link"><i class="fas fa-images"></i> معرض المشاريع</a>
-            <a href="#" class="nav-link"><i class="fas fa-history"></i> السجل</a>
-            <a href="#" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a>
-        </nav>
-        
-        <div class="profile-section">
-            <img src="user_avatar.jpg" alt="صورة المستخدم">
-            <p>مرحباً، المستخدم</p>
-            <a href="index.html" class="logout-btn"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</a>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="container">
+        <div class="login-section">
+            <div class="brand-name">Tojim.AI</div>
+            <p class="welcome-text">مرحباً بعودتك! سجل الدخول للاستمرار في إبداعك</p>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <input type="email" id="emailInput" placeholder="البريد الإلكتروني" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="passInput" placeholder="كلمة المرور" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                
+                <div class="forgot-password">
+                    <a href="reset_password.html">نسيت كلمة المرور؟</a>
+                </div>
+                
+                <button type="submit" class="login-btn" id="loginBtn">تسجيل الدخول</button>
+            </form>
+            
+            <button type="button" class="login-btn google-btn" onclick="signInWithGoogle()">
+                <i class="fab fa-google"></i> تسجيل الدخول بواسطة Google
+            </button>
+
+            <div class="divider"><span>أو</span></div>
+            
+            <div class="no-account">
+                ليس لديك حساب؟ <a href="signup.html">إنشاء حساب جديد</a>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-title">قوة الذكاء الاصطناعي بين يديك</div>
+            <p class="info-text">
+                ابدأ رحلتك مع Tojim.AI الآن واستفد من أحدث أدوات التوليد، من تحويل الأفكار إلى صور احترافية، إلى صياغة محتوى نصي لا مثيل له.
+            </p>
+            <a href="#" class="info-link">اكتشف الأدوات الجديدة <i class="fas fa-arrow-left"></i></a>
         </div>
     </div>
 
-    <div class="main-content">
-        <div class="header">
-            <h1>ملخص حسابك في Tojim.AI</h1>
-            <div style="font-size: 0.9rem; color: var(--success-color);"><i class="fas fa-check-circle"></i> اشتراك Premium نشط</div>
-        </div>
-        
-        <div class="ai-chat-bar">
-            <h3><i class="fas fa-robot"></i> ابدأ التحدث مع Tojim AI</h3>
-            <div class="chat-input-group">
-                <input type="text" id="aiQuery" placeholder="اكتب سؤالك أو اطلب صورة/محتوى هنا..." onkeypress="if(event.key === 'Enter') sendMessage()">
-                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="details">
-                    <h3>المشاريع المنجزة</h3>
-                    <p>42</p>
-                </div>
-                <i class="fas fa-check-double icon"></i>
-            </div>
-            
-            <div class="stat-card">
-                <div class="details">
-                    <h3>رصيد التوليد الشهري</h3>
-                    <p>غير محدود</p>
-                </div>
-                <i class="fas fa-infinity icon"></i>
-            </div>
-            
-            <div class="stat-card">
-                <div class="details">
-                    <h3>آخر استخدام</h3>
-                    <p>منذ 3 ساعات</p>
-                </div>
-                <i class="fas fa-clock icon"></i>
-            </div>
-        </div>
-
-        <div class="tools-section">
-            <h2>أو اختر أداة متخصصة:</h2>
-            
-            <div class="tools-grid">
-                
-                <div class="tool-card" onclick="alert('جارٍ فتح أداة توليد الصور')">
-                    <i class="fas fa-image" style="color: #6366f1;"></i>
-                    <h3>توليد الصور بالذكاء الاصطناعي</h3>
-                    <p>حوّل الأوصاف النصية إلى صور فنية عالية الجودة خلال ثوانٍ. بدقة 4K.</p>
-                    <a href="#">ابدأ الآن <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="tool-card" onclick="alert('جارٍ فتح أداة تحسين النصوص')">
-                    <i class="fas fa-pen-fancy" style="color: #a855f7;"></i>
-                    <h3>مُحسّن النصوص والبريد</h3>
-                    <p>صياغة رسائل البريد الإلكتروني، المقالات، والمحتوى التسويقي بأسلوب احترافي ومقنع.</p>
-                    <a href="#">ابدأ الآن <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-                <div class="tool-card" onclick="alert('جارٍ فتح أداة Chef AI')">
-                    <i class="fas fa-utensils" style="color: #f59e0b;"></i>
-                    <h3>Chef AI (وصفات مبتكرة)</h3>
-                    <p>اكتشف وصفات جديدة بناءً على المكونات المتوفرة لديك أو حميتك الغذائية.</p>
-                    <a href="#">ابدأ الآن <i class="fas fa-arrow-left"></i></a>
-                </div>
-                
-                <div class="tool-card" onclick="alert('جارٍ فتح أداة توليد الفيديو')">
-                    <i class="fas fa-video" style="color: #ef4444;"></i>
-                    <h3>توليد مقاطع الفيديو</h3>
-                    <p>إنشاء مقاطع فيديو قصيرة متحركة أو إعلانية من نص أو صورة ثابتة.</p>
-                    <a href="#">ابدأ الآن <i class="fas fa-arrow-left"></i></a>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    
     <script>
-        function sendMessage() {
-            const query = document.getElementById('aiQuery').value;
-            if (query.trim() === "") {
-                alert("الرجاء كتابة استفسارك أولاً!");
-                return;
-            }
-            alert(`تم إرسال الاستفسار إلى Tojim AI: "${query}". (هنا سيتم إرساله للخادم)`);
-            document.getElementById('aiQuery').value = ''; // مسح حقل الإدخال
+        // 🟢 2. دالة معالجة Google Sign-In (محاكاة) 🟢
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            alert('تم استقبال بيانات تسجيل الدخول من Google بنجاح. جاري التحويل...');
+            // التحويل إلى لوحة التحكم
+            window.location.href = 'dashboard.html'; 
+        }
+        
+        function signInWithGoogle() {
+            // يتم التعامل معها بواسطة مكتبة Google Sign-In SDK
+            alert('جارٍ محاولة تسجيل الدخول بواسطة Google...');
+        }
+        
+        // 🔴 3. دالة معالجة تسجيل الدخول العادية (مع إضافة التحويل) 🔴
+        function handleLogin(event) {
+            event.preventDefault(); // منع الإرسال الافتراضي للصفحة
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passInput').value;
+
+            document.getElementById('loginBtn').innerText = "جاري التحقق...";
+            document.getElementById('loginBtn').disabled = true;
+
+            // محاكاة عملية تحقق ناجحة من الخادم (يجب استبدال هذا بكود حقيقي)
+            setTimeout(() => {
+                alert(`تم تسجيل دخول المستخدم ${email} بنجاح!`);
+                
+                // ✅ التحويل إلى لوحة التحكم بعد نجاح الدخول ✅
+                window.location.href = 'dashboard.html'; 
+                
+            }, 1500); // تأخير وهمي 1.5 ثانية
         }
     </script>
 </body>
